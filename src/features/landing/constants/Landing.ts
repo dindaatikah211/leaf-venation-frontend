@@ -1,61 +1,67 @@
-import { ScanSearch, BookOpen, Zap } from 'lucide-react'
-import { VenationType, FeatureItem, StatItem } from '../types/Landing'
+import { Upload, Zap, BarChart3, BookOpen } from 'lucide-react'
+import type { Feature, Stat, VenationType } from '../types/Landing'
 
 export const VENATION_TYPES: VenationType[] = [
   {
     name: 'Menyirip',
     latin: 'Pinnate',
-    desc: 'Urat tengah satu, cabang ke samping seperti sirip ikan.',
-    example: 'Mangga, Jambu, Rambutan',
-    color: '#2D5016',
+    desc: 'Satu tulang utama di tengah dengan cabang-cabang yang keluar ke samping seperti sirip.',
+    example: 'daun mangga, pakis',
+    color: '#4A7C2F',
   },
   {
     name: 'Menjari',
     latin: 'Palmate',
-    desc: 'Beberapa urat utama menyebar dari satu titik seperti jari tangan.',
-    example: 'Pepaya, Singkong, Jarak',
-    color: '#4A7C2F',
+    desc: 'Beberapa tulang utama menyebar dari satu titik pangkal daun, seperti jari-jari tangan.',
+    example: 'daun pepaya, singkong',
+    color: '#C9A227',
   },
   {
     name: 'Melengkung',
-    latin: 'Curved',
-    desc: 'Urat melengkung mengikuti tepi daun, bertemu di ujung.',
-    example: 'Sirih, Gadung, Eceng Gondok',
-    color: '#7BAF5A',
+    latin: 'Arcuate',
+    desc: 'Tulang-tulang daun melengkung mengikuti tepi daun dan bertemu di ujung.',
+    example: 'daun sirih',
+    color: '#2E8B8B',
   },
   {
     name: 'Sejajar',
     latin: 'Parallel',
-    desc: 'Urat sejajar dari pangkal ke ujung daun.',
-    example: 'Jagung, Padi, Rumput',
-    color: '#C8A96E',
+    desc: 'Tulang-tulang daun memanjang lurus sejajar dari pangkal hingga ujung daun.',
+    example: 'daun padi, rumput',
+    color: '#B5651D',
   },
 ]
 
-export const FEATURES: FeatureItem[] = [
+export const STATS: Stat[] = [
+  { value: '4', label: 'Kelas tulang daun' },
+  { value: '747', label: 'Gambar dataset' },
+  { value: '2', label: 'Model deep learning' },
+  { value: '90.6%', label: 'Akurasi uji terbaik' },
+]
+
+export const FEATURES: Feature[] = [
   {
-    icon: ScanSearch,
-    title: 'Klasifikasi Otomatis',
-    titleEn: 'Auto Classification',
-    desc: 'Upload foto daun, AI langsung mengenali jenis tulang daunnya.',
-  },
-  {
-    icon: BookOpen,
-    title: 'Informasi Lengkap',
-    titleEn: 'Rich Information',
-    desc: 'Setiap hasil dilengkapi penjelasan ilmiah tentang jenis tulang daun.',
+    icon: Upload,
+    title: 'Cukup Unggah Foto',
+    titleEn: 'Just upload a photo',
+    desc: 'Pilih foto daun dari galeri atau kamera, tanpa akun dan tanpa pengaturan rumit.',
   },
   {
     icon: Zap,
     title: 'Hasil Instan',
-    titleEn: 'Instant Results',
-    desc: 'Prediksi dalam hitungan detik menggunakan model deep learning.',
+    titleEn: 'Instant results',
+    desc: 'Model langsung menebak jenis tulang daun dalam hitungan detik.',
   },
-]
-
-export const STATS: StatItem[] = [
-  { value: '4',    label: 'Kelas tulang daun' },
-  { value: '100+', label: 'Dataset foto daun'  },
-  { value: '2',    label: 'Model dibandingkan' },
-  { value: '95%+', label: 'Target akurasi'     },
+  {
+    icon: BarChart3,
+    title: 'Tingkat Keyakinan',
+    titleEn: 'Confidence score',
+    desc: 'Setiap prediksi disertai persentase confidence supaya kamu tahu seberapa yakin modelnya.',
+  },
+  {
+    icon: BookOpen,
+    title: 'Belajar Sambil Mencoba',
+    titleEn: 'Learn as you go',
+    desc: 'Pelajari ciri tiap jenis tulang daun lewat halaman edukasi yang terhubung langsung.',
+  },
 ]
