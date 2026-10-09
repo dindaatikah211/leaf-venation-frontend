@@ -1,7 +1,6 @@
 import type { VenationClass } from '../types/Classify'
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000'
-export const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK !== 'false'
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024
 export const ACCEPTED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
