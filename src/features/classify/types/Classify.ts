@@ -9,3 +9,10 @@ export type PredictionResult = {
 export type StoredResult = PredictionResult & {
   image: string
 }
+
+export type ClassifyErrorKind = 'validation' | 'not_leaf' | 'invalid_image' | 'server'
+
+export type ClassifyFailure = {
+  kind: ClassifyErrorKind
+  message: string
+}

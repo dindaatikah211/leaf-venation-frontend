@@ -1,4 +1,4 @@
-import type { VenationClass } from '../types/Classify'
+import type { ClassifyErrorKind, VenationClass } from '../types/Classify'
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000'
 
@@ -21,3 +21,13 @@ export const TIPS = [
   'Gunakan background polos dan terang',
   'Hindari bayangan dan warna filter',
 ]
+
+export const ERROR_COPY: Record<ClassifyErrorKind, { title: string; hint?: string }> = {
+  not_leaf: {
+    title: 'Ini sepertinya bukan foto daun',
+    hint: 'Model hanya mengenali tulang daun. Foto satu daun dengan jelas dan background polos.',
+  },
+  invalid_image: { title: 'Foto tidak dapat diproses' },
+  validation: { title: 'Foto tidak sesuai' },
+  server: { title: 'Klasifikasi gagal' },
+}

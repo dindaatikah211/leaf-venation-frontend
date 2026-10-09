@@ -3,17 +3,18 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toResizedDataUrl } from '@/src/shared/lib/image'
-import { classifyImage } from '../services/classifyService'
+import { ClassifyError, classifyImage } from '../services/classifyService'
 import { ACCEPTED_TYPES, MAX_FILE_SIZE, RESULT_STORAGE_KEY } from '../constants/Classify'
-import type { StoredResult } from '../types/Classify'
+import type { ClassifyFailure, StoredResult } from '../types/Classify'
 
 export function useClassify() {
   const router = useRouter()
   const [file, setFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<ClassifyFailure | null>(null)
 
   const preview = useMemo(() => (file ? URL.createObjectURL(file) : null), [file])
+  const rejected = error?.kind === 'not_leaf' || error?.kind === 'invalid_image'
 
   useEffect(() => {
     return () => {
@@ -25,11 +26,11 @@ export function useClassify() {
     setError(null)
     if (!next) return
     if (!ACCEPTED_TYPES.includes(next.type)) {
-      setError('Format foto harus JPG, PNG, atau WebP')
+      setError({ kind: 'validation', message: 'Format foto harus JPG, PNG, atau WebP' })
       return
     }
     if (next.size > MAX_FILE_SIZE) {
-      setError(`Ukuran foto maksimal ${MAX_FILE_SIZE / 1024 / 1024} MB`)
+      setError({ kind: 'validation', message: `Ukuran foto maksimal ${MAX_FILE_SIZE / 1024 / 1024} MB` })
       return
     }
     setFile(next)
@@ -50,10 +51,14 @@ export function useClassify() {
       sessionStorage.setItem(RESULT_STORAGE_KEY, JSON.stringify(stored))
       router.push('/classify/result')
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Terjadi kesalahan, coba lagi')
+      setError(
+        e instanceof ClassifyError
+          ? { kind: e.kind, message: e.message }
+          : { kind: 'server', message: e instanceof Error ? e.message : 'Terjadi kesalahan, coba lagi' }
+      )
       setLoading(false)
     }
   }, [file, router])
 
-  return { file, preview, loading, error, selectFile, reset, submit }
+  return { file, preview, loading, error, rejected, selectFile, reset, submit }
 }

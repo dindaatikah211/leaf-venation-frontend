@@ -5,9 +5,10 @@ import { ImagePlus, Loader2, X } from 'lucide-react'
 import { Button } from '@/src/shared/components/ui/button'
 import { useClassify } from '../hooks/useClassify'
 import { ACCEPTED_TYPES, MAX_FILE_SIZE, TIPS } from '../constants/Classify'
+import ClassifyNotice from './ClassifyNotice'
 
 export default function ClassifyContent() {
-  const { file, preview, loading, error, selectFile, reset, submit } = useClassify()
+  const { file, preview, loading, error, rejected, selectFile, reset, submit } = useClassify()
   const inputRef = useRef<HTMLInputElement>(null)
   const [dragging, setDragging] = useState(false)
 
@@ -15,6 +16,11 @@ export default function ClassifyContent() {
     e.preventDefault()
     setDragging(false)
     selectFile(e.dataTransfer.files[0] ?? null)
+  }
+
+  const pickAnother = () => {
+    reset()
+    inputRef.current?.click()
   }
 
   return (
@@ -135,22 +141,12 @@ export default function ClassifyContent() {
           </div>
         )}
 
-        {error && (
-          <p style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: '13px',
-            color: '#B3261E',
-            textAlign: 'center',
-            marginTop: '16px',
-          }}>
-            {error}
-          </p>
-        )}
+        {error && <ClassifyNotice error={error} onPickAnother={rejected ? pickAnother : undefined} />}
 
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '28px' }}>
           <Button
             onClick={submit}
-            disabled={!file || loading}
+            disabled={!file || loading || rejected}
             size="lg"
             style={{
               borderRadius: '999px',
