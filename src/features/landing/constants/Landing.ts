@@ -62,7 +62,8 @@ export const STATS: Stat[] = [
   { value: '4', label: 'Kelas tulang daun' },
   { value: '747', label: 'Gambar dataset' },
   { value: '2', label: 'Model deep learning' },
-  { value: '90.6%', label: 'Akurasi uji terbaik' },
+  { value: '90.6%', label: 'Akurasi uji MobileNetV2' },
+  { value: '75%', label: 'Akurasi uji EfficientNetB0' },
 ]
 
 export const FEATURES: Feature[] = [
