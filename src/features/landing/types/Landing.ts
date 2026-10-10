@@ -19,3 +19,11 @@ export type Feature = {
   titleEn: string
   desc: string
 }
+
+export type Step = {
+  step: string
+  icon: LucideIcon
+  title: string
+  titleEn: string
+  desc: string
+}

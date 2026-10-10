@@ -1,5 +1,7 @@
-import { Upload, Zap, BarChart3, BookOpen } from 'lucide-react'
-import type { Feature, Stat, VenationType } from '../types/Landing'
+import { BarChart3, BookOpen, Cpu, Upload, Zap } from 'lucide-react'
+import type { Feature, Stat, Step, VenationType } from '../types/Landing'
+
+export const HERO_FACTS = ['4 jenis tulang daun', 'Tanpa akun', 'Hasil dalam hitungan detik']
 
 export const VENATION_TYPES: VenationType[] = [
   {
@@ -29,6 +31,30 @@ export const VENATION_TYPES: VenationType[] = [
     desc: 'Tulang-tulang daun memanjang lurus sejajar dari pangkal hingga ujung daun.',
     example: 'daun padi, rumput',
     color: '#B5651D',
+  },
+]
+
+export const HOW_IT_WORKS: Step[] = [
+  {
+    step: '01',
+    icon: Upload,
+    title: 'Unggah Foto',
+    titleEn: 'Upload a photo',
+    desc: 'Pilih foto satu daun dari galeri atau kamera. Format JPG, PNG, atau WebP hingga 5 MB.',
+  },
+  {
+    step: '02',
+    icon: Cpu,
+    title: 'Model Menganalisis',
+    titleEn: 'The model analyzes',
+    desc: 'Model deep learning membaca pola percabangan tulang daun. Foto yang bukan daun otomatis ditolak.',
+  },
+  {
+    step: '03',
+    icon: BarChart3,
+    title: 'Lihat Hasil',
+    titleEn: 'See the result',
+    desc: 'Dapatkan jenis tulang daun beserta tingkat keyakinan untuk setiap kelas.',
   },
 ]
 

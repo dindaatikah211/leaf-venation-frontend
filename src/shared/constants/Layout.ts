@@ -1,0 +1,1 @@
+export const CONTAINER = { maxWidth: '1120px', margin: '0 auto' } as const
