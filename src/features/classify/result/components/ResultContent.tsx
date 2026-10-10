@@ -7,14 +7,14 @@ import { motion } from 'motion/react'
 import { BookOpen, RotateCcw } from 'lucide-react'
 import { Button } from '@/src/shared/components/ui/button'
 import CountUp from '@/src/shared/components/commons/CountUp'
-import { CONTAINER } from '@/src/shared/constants/Layout'
+import { EYEBROW, PAGE_SECTION, PAGE_TITLE, PANEL, SPLIT_GRID, STAGE_HEIGHT } from '@/src/shared/constants/Layout'
 import { EASE } from '@/src/shared/constants/Motion'
 import { LINE_MASK, lineUp, rise, stagger } from '@/src/shared/constants/Variants'
 import { CLASS_META, CLASS_NAMES, LOW_CONFIDENCE_THRESHOLD } from '../../constants/Classify'
 import { getStoredRaw, parseStoredResult } from '../helpers/storage'
 
 const subscribe = () => () => {}
-const container = stagger(0.25)
+const container = stagger(0.2)
 const percent = (value: number) => `${(value * 100).toFixed(1)}%`
 
 export default function ResultContent() {
@@ -34,106 +34,66 @@ export default function ResultContent() {
   const isLowConfidence = result.confidence < LOW_CONFIDENCE_THRESHOLD
 
   return (
-    <section style={{ padding: '80px 24px 100px' }}>
-      <div style={{
-        ...CONTAINER,
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
-        gap: '48px 72px',
-        alignItems: 'start',
-      }}>
+    <section style={PAGE_SECTION}>
+      <motion.div variants={container} initial="hidden" animate="show" style={SPLIT_GRID}>
 
-        <motion.div
-          initial={{ clipPath: 'inset(0 0 100% 0)', opacity: 0 }}
-          animate={{ clipPath: 'inset(0 0 0% 0)', opacity: 1 }}
-          transition={{ duration: 1.1, ease: EASE }}
-          style={{
-            borderRadius: '28px',
-            overflow: 'hidden',
-            border: '1px solid var(--color-border)',
-            background: '#fff',
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={result.image}
-            alt="Foto daun yang dianalisis"
-            style={{ display: 'block', width: '100%', maxHeight: '520px', objectFit: 'contain' }}
-          />
-        </motion.div>
+        <div>
+          <motion.p variants={rise} style={{ ...EYEBROW, marginBottom: '24px' }}>
+            Hasil · Result
+          </motion.p>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
-        >
+          <h1 style={PAGE_TITLE}>
+            <span style={LINE_MASK}>
+              <motion.span variants={lineUp} style={{ display: 'block' }}>
+                Tulang daun
+              </motion.span>
+            </span>
+            <span style={LINE_MASK}>
+              <motion.em variants={lineUp} style={{ display: 'block', color: 'var(--color-primary-mid)' }}>
+                {meta.name.toLowerCase()}.
+              </motion.em>
+            </span>
+          </h1>
 
-          <div>
-            <motion.p variants={rise} style={{
-              fontSize: '11px',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: 'var(--color-text-light)',
-              fontFamily: 'var(--font-body)',
-              marginBottom: '16px',
+          <motion.p variants={rise} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontFamily: 'var(--font-body)',
+            fontSize: '14px',
+            fontStyle: 'italic',
+            color: 'var(--color-text-light)',
+            marginBottom: '40px',
+          }}>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: meta.color }} />
+            {meta.latin}
+          </motion.p>
+
+          <motion.div variants={rise} style={{
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: '14px',
+            marginBottom: '32px',
+          }}>
+            <p style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(44px, 6vw, 64px)',
+              letterSpacing: '-0.04em',
+              lineHeight: 1,
+              color: 'var(--color-primary)',
+              fontVariantNumeric: 'tabular-nums',
             }}>
-              Hasil · Result
-            </motion.p>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '8px' }}>
-              <motion.span variants={rise} style={{
-                width: '20px',
-                height: '20px',
-                borderRadius: '50%',
-                background: meta.color,
-                flexShrink: 0,
-              }} />
-              <h1 style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(40px, 6vw, 72px)',
-                fontWeight: 400,
-                letterSpacing: '-0.04em',
-                lineHeight: 1.05,
-                color: 'var(--color-text-main)',
-              }}>
-                <span style={LINE_MASK}>
-                  <motion.span variants={lineUp} style={{ display: 'block' }}>
-                    {meta.name}
-                  </motion.span>
-                </span>
-              </h1>
-            </div>
-
-            <motion.p variants={rise} style={{
-              fontFamily: 'var(--font-body)',
-              fontSize: '14px',
-              fontStyle: 'italic',
-              color: 'var(--color-text-light)',
-              marginBottom: '28px',
-            }}>
-              {meta.latin}
-            </motion.p>
-
-            <motion.div variants={rise} style={{ display: 'flex', alignItems: 'baseline', gap: '14px' }}>
-              <p style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(44px, 6vw, 64px)',
-                letterSpacing: '-0.04em',
-                lineHeight: 1,
-                color: 'var(--color-primary)',
-                fontVariantNumeric: 'tabular-nums',
-              }}>
-                <CountUp value={percent(result.confidence)} />
-              </p>
-              <p style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'var(--color-text-muted)' }}>
-                keyakinan model
-              </p>
-            </motion.div>
-          </div>
+              <CountUp value={percent(result.confidence)} />
+            </p>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'var(--color-text-muted)' }}>
+              keyakinan model
+            </p>
+          </motion.div>
 
           {isLowConfidence && (
             <motion.p variants={rise} style={{
+              maxWidth: '420px',
+              marginBottom: '32px',
               fontFamily: 'var(--font-body)',
               fontSize: '13px',
               lineHeight: 1.6,
@@ -146,37 +106,6 @@ export default function ResultContent() {
               Keyakinan model masih rendah. Coba foto ulang dengan satu daun saja dan background polos.
             </motion.p>
           )}
-
-          <motion.div variants={rise} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {ranked.map((name, index) => {
-              const value = result.probabilities[name]
-              return (
-                <div key={name}>
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    fontFamily: 'var(--font-body)',
-                    fontSize: '13px',
-                    color: 'var(--color-text-main)',
-                    marginBottom: '8px',
-                  }}>
-                    <span>{CLASS_META[name].name} · {CLASS_META[name].latin}</span>
-                    <span style={{ color: 'var(--color-text-muted)', fontVariantNumeric: 'tabular-nums' }}>
-                      <CountUp value={percent(value)} />
-                    </span>
-                  </div>
-                  <div style={{ height: '8px', borderRadius: '999px', background: 'var(--color-border)', overflow: 'hidden' }}>
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${value * 100}%` }}
-                      transition={{ duration: 1.1, delay: 0.6 + index * 0.12, ease: EASE }}
-                      style={{ height: '100%', borderRadius: '999px', background: CLASS_META[name].color }}
-                    />
-                  </div>
-                </div>
-              )
-            })}
-          </motion.div>
 
           <motion.div variants={rise} style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             <Button asChild size="lg" style={{
@@ -208,8 +137,61 @@ export default function ResultContent() {
               </Link>
             </Button>
           </motion.div>
+        </div>
+
+        <motion.div variants={rise} style={PANEL}>
+          <motion.div
+            initial={{ clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ clipPath: 'inset(0 0 0% 0)' }}
+            transition={{ duration: 1.1, delay: 0.3, ease: EASE }}
+            style={{
+              height: STAGE_HEIGHT,
+              borderRadius: '20px',
+              overflow: 'hidden',
+              background: 'var(--color-bg)',
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={result.image}
+              alt="Foto daun yang dianalisis"
+              style={{ display: 'block', width: '100%', height: '100%', objectFit: 'contain' }}
+            />
+          </motion.div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', padding: '28px 8px 8px' }}>
+            {ranked.map((name, index) => {
+              const value = result.probabilities[name]
+              return (
+                <div key={name}>
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '13px',
+                    color: 'var(--color-text-main)',
+                    marginBottom: '8px',
+                  }}>
+                    <span>{CLASS_META[name].name} · {CLASS_META[name].latin}</span>
+                    <span style={{ color: 'var(--color-text-muted)', fontVariantNumeric: 'tabular-nums' }}>
+                      <CountUp value={percent(value)} />
+                    </span>
+                  </div>
+                  <div style={{ height: '8px', borderRadius: '999px', background: 'var(--color-border)', overflow: 'hidden' }}>
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${value * 100}%` }}
+                      transition={{ duration: 1.1, delay: 0.6 + index * 0.12, ease: EASE }}
+                      style={{ height: '100%', borderRadius: '999px', background: CLASS_META[name].color }}
+                    />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </motion.div>
-      </div>
+
+      </motion.div>
     </section>
   )
 }

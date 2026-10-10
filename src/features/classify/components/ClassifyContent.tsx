@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { ImagePlus, Loader2, X } from 'lucide-react'
 import { Button } from '@/src/shared/components/ui/button'
 import { useSplash } from '@/src/shared/components/commons/SplashProvider'
-import { CONTAINER } from '@/src/shared/constants/Layout'
+import { EYEBROW, PAGE_SECTION, PAGE_TITLE, PANEL, SPLIT_GRID, STAGE_HEIGHT } from '@/src/shared/constants/Layout'
 import { EASE } from '@/src/shared/constants/Motion'
 import { LINE_MASK, lineUp, rise, stagger } from '@/src/shared/constants/Variants'
 import { useClassify } from '../hooks/useClassify'
@@ -13,7 +13,6 @@ import { ACCEPTED_TYPES, MAX_FILE_SIZE, TIPS } from '../constants/Classify'
 import ClassifyNotice from './ClassifyNotice'
 
 const container = stagger(0.2)
-const STAGE_HEIGHT = '340px'
 
 const swap = {
   initial: { opacity: 0, scale: 0.97 },
@@ -43,48 +42,20 @@ export default function ClassifyContent() {
   }
 
   return (
-    <section style={{
-      display: 'flex',
-      alignItems: 'center',
-      minHeight: 'calc(100svh - 72px)',
-      padding: '72px 24px 100px',
-      background: 'radial-gradient(ellipse 70% 60% at 85% 10%, rgba(74,124,47,0.08) 0%, transparent 70%)',
-    }}>
+    <section style={PAGE_SECTION}>
       <motion.div
         variants={container}
         initial="hidden"
         animate={ready ? 'show' : 'hidden'}
-        style={{
-          ...CONTAINER,
-          width: '100%',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
-          gap: '56px 80px',
-          alignItems: 'center',
-        }}
+        style={SPLIT_GRID}
       >
 
         <div>
-          <motion.p variants={rise} style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: '11px',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            color: 'var(--color-text-light)',
-            marginBottom: '24px',
-          }}>
+          <motion.p variants={rise} style={{ ...EYEBROW, marginBottom: '24px' }}>
             Klasifikasi · Classify
           </motion.p>
 
-          <h1 style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(44px, 6vw, 80px)',
-            fontWeight: 400,
-            lineHeight: 1.05,
-            letterSpacing: '-0.04em',
-            color: 'var(--color-text-main)',
-            marginBottom: '24px',
-          }}>
+          <h1 style={PAGE_TITLE}>
             <span style={LINE_MASK}>
               <motion.span variants={lineUp} style={{ display: 'block' }}>
                 Unggah foto
@@ -109,16 +80,7 @@ export default function ClassifyContent() {
           </motion.p>
 
           <motion.div variants={rise} style={{ maxWidth: '420px' }}>
-            <p style={{
-              fontFamily: 'var(--font-body)',
-              fontSize: '11px',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: 'var(--color-text-light)',
-              marginBottom: '12px',
-            }}>
-              Tips foto yang baik
-            </p>
+            <p style={{ ...EYEBROW, marginBottom: '12px' }}>Tips foto yang baik</p>
             <ul style={{
               listStyle: 'none',
               padding: 0,
@@ -151,12 +113,7 @@ export default function ClassifyContent() {
           </motion.div>
         </div>
 
-        <motion.div variants={rise} style={{
-          padding: '20px',
-          borderRadius: '28px',
-          border: '1px solid var(--color-border)',
-          background: '#fff',
-        }}>
+        <motion.div variants={rise} style={PANEL}>
           <input
             ref={inputRef}
             type="file"
