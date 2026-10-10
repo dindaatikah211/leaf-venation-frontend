@@ -2,32 +2,18 @@
 
 import { useRef } from 'react'
 import Link from 'next/link'
-import { motion, useInView, type Variants } from 'motion/react'
+import { motion, useInView } from 'motion/react'
 import { ArrowRight, BookOpen, Leaf } from 'lucide-react'
 import { Badge } from '@/src/shared/components/ui/badge'
 import { Button } from '@/src/shared/components/ui/button'
 import { useSplash } from '@/src/shared/components/commons/SplashProvider'
 import { CONTAINER } from '@/src/shared/constants/Layout'
 import { EASE, REVEAL_VIEWPORT } from '@/src/shared/constants/Motion'
+import { LINE_MASK, lineUp, rise, stagger } from '@/src/shared/constants/Variants'
 import { HERO_FACTS } from '../constants/Landing'
 import SpecimenCard from './SpecimenCard'
 
-const container: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } },
-}
-
-const rise: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: EASE } },
-}
-
-const lineUp: Variants = {
-  hidden: { y: '110%' },
-  show: { y: 0, transition: { duration: 1.05, ease: EASE } },
-}
-
-const lineMask = { display: 'block', overflow: 'hidden', paddingBottom: '0.12em', marginBottom: '-0.12em' } as const
+const container = stagger()
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null)
@@ -84,17 +70,17 @@ export default function Hero() {
             color: 'var(--color-text-main)',
             marginBottom: '28px',
           }}>
-            <span style={lineMask}>
+            <span style={LINE_MASK}>
               <motion.span variants={lineUp} style={{ display: 'block' }}>
                 Kenali Tulang Daun
               </motion.span>
             </span>
-            <span style={lineMask}>
+            <span style={LINE_MASK}>
               <motion.em variants={lineUp} style={{ display: 'block', color: 'var(--color-primary-mid)' }}>
                 dengan Kecerdasan
               </motion.em>
             </span>
-            <span style={lineMask}>
+            <span style={LINE_MASK}>
               <motion.em variants={lineUp} style={{ display: 'block', color: 'var(--color-primary-mid)' }}>
                 Buatan.
               </motion.em>

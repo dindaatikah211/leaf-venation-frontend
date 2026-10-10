@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { LEAF_OUTLINE, LEARN_VENATIONS } from '@/src/features/learn/constants/Learn'
+import VenationIllustration from '@/src/features/learn/components/VenationIllustration'
+import { LEARN_VENATIONS } from '@/src/features/learn/constants/Learn'
 import { EASE } from '@/src/shared/constants/Motion'
 
 const INTERVAL = 4200
@@ -59,43 +60,16 @@ export default function SpecimenCard({ active }: SpecimenCardProps) {
         backgroundSize: '18px 18px',
       }}>
         <AnimatePresence mode="wait">
-          <motion.svg
+          <motion.div
             key={current.id}
-            viewBox="0 0 120 120"
-            width="260"
-            height="260"
-            fill="none"
-            role="img"
-            aria-label={`Ilustrasi tulang daun ${current.name}`}
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.03 }}
             transition={{ duration: 0.5, ease: EASE }}
+            style={{ display: 'flex' }}
           >
-            <motion.path
-              d={LEAF_OUTLINE}
-              fill={current.color}
-              fillOpacity={0.12}
-              stroke={current.color}
-              strokeWidth={1.6}
-              strokeLinejoin="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1.1, ease: EASE }}
-            />
-            {current.veins.map((d, veinIndex) => (
-              <motion.path
-                key={d}
-                d={d}
-                stroke={current.color}
-                strokeWidth={1.6}
-                strokeLinecap="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 0.9, delay: 0.35 + veinIndex * 0.1, ease: EASE }}
-              />
-            ))}
-          </motion.svg>
+            <VenationIllustration name={current.name} color={current.color} veins={current.veins} />
+          </motion.div>
         </AnimatePresence>
       </div>
 
