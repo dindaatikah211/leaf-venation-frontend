@@ -145,7 +145,6 @@ export default function Footer() {
           color: 'var(--color-text-light)',
         }}>
           <p>© {new Date().getFullYear()} VenaLeaf · Klasifikasi Tulang Daun</p>
-          <p>Dibuat untuk mata kuliah Pengolahan Citra</p>
         </div>
 
       </div>
