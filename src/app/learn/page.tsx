@@ -3,22 +3,17 @@ import Footer from '@/src/shared/components/commons/Footer'
 import LearnHero from '@/src/features/learn/components/LearnHero'
 import VenationCard from '@/src/features/learn/components/VenationCard'
 import { LEARN_VENATIONS } from '@/src/features/learn/constants/Learn'
+import { CONTAINER } from '@/src/shared/constants/Layout'
 
 export default function LearnPage() {
   return (
     <div style={{ background: 'var(--color-bg)' }}>
       <Navbar />
       <LearnHero />
-      <section style={{ padding: '20px 24px 100px' }}>
-        <div style={{
-          maxWidth: '1000px',
-          margin: '0 auto',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '24px',
-        }}>
-          {LEARN_VENATIONS.map((venation) => (
-            <VenationCard key={venation.id} {...venation} />
+      <section style={{ padding: '0 24px 120px' }}>
+        <div style={CONTAINER}>
+          {LEARN_VENATIONS.map((venation, index) => (
+            <VenationCard key={venation.id} index={index} {...venation} />
           ))}
         </div>
       </section>
