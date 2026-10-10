@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VenaLeaf Frontend
 
-## Getting Started
+Antarmuka web untuk mengidentifikasi jenis tulang daun dengan kecerdasan buatan: menyirip (pinnate), menjari (palmate), melengkung (arcuate), dan sejajar (parallel). Pengguna mengunggah foto daun, lalu hasilnya ditampilkan beserta tingkat keyakinan model.
 
-First, run the development server:
+Demo: [vena-leaf.vercel.app](https://vena-leaf.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Teknologi
+
+Next.js (App Router), React, TypeScript, Tailwind CSS, dan shadcn/ui.
+
+## Halaman
+
+| Route              | Isi                                                      |
+| ------------------ | -------------------------------------------------------- |
+| `/`                | Landing page                                             |
+| `/classify`        | Unggah foto daun dan jalankan klasifikasi                |
+| `/classify/result` | Hasil klasifikasi                                        |
+| `/learn`           | Materi tentang jenis-jenis tulang daun                   |
+
+## Struktur Proyek
+
+```text
+src/
+├── app/            routing dan layout Next.js
+├── features/
+│   ├── landing/    Hero, VenationGrid, HowItWorks, FeaturesSection, StatsSection, CTASection
+│   ├── classify/   components, constants, hooks, result, services, types
+│   └── learn/
+└── shared/         components (commons, ui), constants, hooks, lib, types
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Kode dikelompokkan per fitur. Komponen, hook, dan tipe yang dipakai lintas fitur ada di `shared`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Menjalankan Lokal
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm install
+cp .env.example .env
+pnpm dev
+```
 
-## Learn More
+Di Windows (CMD), gunakan `copy .env.example .env`. Lalu isi `NEXT_PUBLIC_API_URL` di `.env` dengan alamat backend, misalnya `http://localhost:5000`. File `.env.example` berisi:
 
-To learn more about Next.js, take a look at the following resources:
+```dotenv
+NEXT_PUBLIC_API_URL=
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Aplikasi berjalan di `http://localhost:3000`. Backend harus berjalan agar klasifikasi bisa dipakai. Lihat repo `leaf-venation-backend`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Variabel Lingkungan
 
-## Deploy on Vercel
+| Variabel              | Keterangan                                                        |
+| --------------------- | ----------------------------------------------------------------- |
+| `NEXT_PUBLIC_API_URL` | Alamat backend, tanpa `/` di akhir. Dibaca saat build.            |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Di-deploy ke Vercel. Isi `NEXT_PUBLIC_API_URL` dengan domain backend di **Settings, Environment Variables** (tipe Config), lalu **Redeploy** setiap kali nilainya berubah karena variabel ini ditanam saat build. Domain frontend juga harus terdaftar di `CORS_ORIGINS` pada backend.
+
+```bash
+pnpm build
+pnpm start
+```
